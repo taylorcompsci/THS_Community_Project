@@ -1,0 +1,6 @@
+{
+  "parent" : "minecraft:item/generated",
+  "textures" : {
+    "layer0" : "ths-community-project:item/test_item"
+  }
+}
