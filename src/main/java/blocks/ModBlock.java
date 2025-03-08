@@ -39,10 +39,11 @@ public class ModBlock extends Block {
     public static ModBlock registerBlock(String path,ModBlock.Settings settings, RegistryKey<ItemGroup> itemGroup){
         ModBlock block = new ModBlock(settings.registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(THSCommunityProject.MOD_ID, path))));
         ModBlock actualBlock = Registry.register(Registries.BLOCK, path, block);
-        registerBlockItem(path, block);
+        registerBlockItem(path, actualBlock);
         groupRegister.put(actualBlock, itemGroup);
         return actualBlock;
     }
+
 
     private static void registerBlockItem(String path, ModBlock block){
         RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path));
@@ -55,7 +56,7 @@ public class ModBlock extends Block {
         THSCommunityProject.LOGGER.info("Registering Mod Blocks!");
         for(ModBlock block: groupRegister.keySet()){
             ItemGroupEvents.modifyEntriesEvent(groupRegister.get(block)).register(entries -> {
-                entries.add(block);
+                entries.add(block.asItem());
             });
         }
 
