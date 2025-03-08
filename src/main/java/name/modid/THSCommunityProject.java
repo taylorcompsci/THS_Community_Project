@@ -1,5 +1,6 @@
 package name.modid;
 
+import blocks.ModBlock;
 import name.modid.items.ModItem;
 import net.fabricmc.api.ModInitializer;
 
@@ -20,6 +21,7 @@ public class THSCommunityProject implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		ModItem.registerModItems();
+		ModBlock.registerModBlocks();
 		LOGGER.info("Hello Fabric world!");
 	}
 }

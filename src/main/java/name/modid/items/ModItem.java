@@ -11,6 +11,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -32,13 +34,13 @@ public class ModItem extends Item {
 
 
     //I will try to make this shorter, but it's going to take a solid min to implement....
-    public static final ModItem TEST_ITEM = registerItem("test_item", new ModItem(new Item.Settings()), ItemGroups.INGREDIENTS);
+    public static final ModItem TEST_ITEM = registerItem("test_item", new Settings(), ItemGroups.INGREDIENTS);
 
 
     //Once item is registered, head over to resources/assets.ths-community-project/lang/en_us.json to register the item's name for formatting.
-    public static <T extends ModItem> T registerItem(String path, T item, RegistryKey<ItemGroup> itemGroup){
-        T actualItem =  Registry.register(Registries.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path), item);
-        actualItem.getSettings().registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path)));
+    public static ModItem registerItem(String path, Settings settings, RegistryKey<ItemGroup> itemGroup){
+            ModItem item = new ModItem(settings.registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path))));
+            ModItem actualItem =  Registry.register(Registries.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path), item);
         groupRegister.put(actualItem, itemGroup);
         return actualItem;
     }
