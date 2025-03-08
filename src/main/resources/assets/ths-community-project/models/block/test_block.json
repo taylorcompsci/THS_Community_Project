@@ -1,0 +1,6 @@
+{
+  "parent" : "minecraft:block/cube-all",
+  "textures" : {
+    "all" : "ths-community-project:block/test_block"
+  }
+}

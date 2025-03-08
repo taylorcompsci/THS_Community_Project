@@ -32,15 +32,15 @@ public class ModBlock extends Block {
         return this.settings;
     }
     //I will try to make this shorter, but it's going to take a solid min to implement....
-   // public static final name.modid.items.ModItem TEST_ITEM = registerItem("test_item", new name.modid.items.ModItem(new Item.Settings()), ItemGroups.INGREDIENTS);
+   public static final ModBlock TEST_BLOCK = registerBlock("test_block", AbstractBlock.Settings.create(), ItemGroups.BUILDING_BLOCKS);
 
 
     //Once item is registered, head over to resources/assets.ths-community-project/lang/en_us.json to register the item's name for formatting.
     public static ModBlock registerBlock(String path,ModBlock.Settings settings, RegistryKey<ItemGroup> itemGroup){
         ModBlock block = new ModBlock(settings.registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(THSCommunityProject.MOD_ID, path))));
         ModBlock actualBlock = Registry.register(Registries.BLOCK, path, block);
-        groupRegister.put(actualBlock, itemGroup);
         registerBlockItem(path, block);
+        groupRegister.put(actualBlock, itemGroup);
         return actualBlock;
     }
 

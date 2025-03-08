@@ -1,0 +1,7 @@
+{
+  "variants" : {
+    "" : {
+      "model" : "ths-community-project:block/test_block"
+    }
+  }
+}
