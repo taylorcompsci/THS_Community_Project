@@ -12,32 +12,31 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class ModItemGroup {
-    private static final  HashMap<ItemGroup, RegistryKey<ItemGroup>> itemGroupToPath = new HashMap<>();
 
-    public static final ItemGroup TEST_GROUP = addItemGroup("test_group", ModItem.TEST_ITEM);
+    //create customKey then Item Group
+    public static final RegistryKey<ItemGroup> test_group_key = createCustomKey("test_group");
+    public static final ItemGroup test_group = addItemGroup("test_group", test_group_key, ModItem.TEST_ITEM);
 
 
-    public static ItemGroup addItemGroup(String path, ModItem icon){
-        // RegistryKey<ItemGroup> itemGroupKey = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(THSCommunityProject.MOD_ID, path));
-        Identifier itemGroupKey = Identifier.of(THSCommunityProject.MOD_ID, path);
-        ItemGroup foo =  Registry.register(Registries.ITEM_GROUP, itemGroupKey,
-                FabricItemGroup.builder()
-                        .icon(() -> new ItemStack(icon))
-                        .displayName(Text.translatable(String.format("itemgroup.ths-community-project.%s", path)))
-                        .build());
-       // itemGroupToPath.put(foo, null);
-        return foo;
+
+
+    public static ItemGroup addItemGroup(String path, RegistryKey<ItemGroup> customKey, ModItem icon){
+       return Registry.register(Registries.ITEM_GROUP, customKey,FabricItemGroup.builder()
+               .icon(()-> new ItemStack(icon.asItem()))
+               .displayName(Text.translatable("itemgroup."+path))
+               .build());
     }
 
-    public static RegistryKey<ItemGroup> retrieveItemGroupKey(ItemGroup itemGroup){
-        return itemGroupToPath.get(itemGroup);
+    public static RegistryKey<ItemGroup> createCustomKey(String path){
+        return RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(THSCommunityProject.MOD_ID, path));
     }
+
 
     public static void registerModItemGroups(){
-        System.out.println(itemGroupToPath.get(TEST_GROUP));
         THSCommunityProject.LOGGER.info("Item groups are registering!");
     }
 }

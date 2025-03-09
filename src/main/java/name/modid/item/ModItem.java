@@ -32,7 +32,7 @@ public class ModItem extends Item {
 
 
     //I will try to make this shorter, but it's going to take a solid min to implement....
-    public static final ModItem TEST_ITEM = registerItem("test_item", new Settings(), ModItemGroup.retrieveItemGroupKey(ModItemGroup.TEST_GROUP));
+    public static final ModItem TEST_ITEM = registerItem("test_item", new Settings(), ModItemGroup.test_group_key);
     public static final ModItem TEST_ITEM2 = registerItem("test_item2", new Settings(), ItemGroups.INGREDIENTS);
 
     //Once item is registered, head over to resources/assets.ths-community-project/lang/en_us.json to register the item's name for formatting.
