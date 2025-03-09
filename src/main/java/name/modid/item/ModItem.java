@@ -1,4 +1,4 @@
-package name.modid.items;
+package name.modid.item;
 
 
 import name.modid.THSCommunityProject;
@@ -12,9 +12,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.Objects;
 
 //because settings are private, I had to inherit, so I can make an accessor.
 public class ModItem extends Item {
@@ -34,7 +32,7 @@ public class ModItem extends Item {
 
 
     //I will try to make this shorter, but it's going to take a solid min to implement....
-    public static final ModItem TEST_ITEM = registerItem("test_item", new Settings(), ItemGroups.INGREDIENTS);
+    public static final ModItem TEST_ITEM = registerItem("test_item", new Settings(), ModItemGroup.retrieveItemGroupKey(ModItemGroup.TEST_GROUP));
     public static final ModItem TEST_ITEM2 = registerItem("test_item2", new Settings(), ItemGroups.INGREDIENTS);
 
     //Once item is registered, head over to resources/assets.ths-community-project/lang/en_us.json to register the item's name for formatting.

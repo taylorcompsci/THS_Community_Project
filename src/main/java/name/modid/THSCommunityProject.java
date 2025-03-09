@@ -1,7 +1,8 @@
 package name.modid;
 
-import blocks.ModBlock;
-import name.modid.items.ModItem;
+import block.ModBlock;
+import name.modid.item.ModItem;
+import name.modid.item.ModItemGroup;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ public class THSCommunityProject implements ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+		ModItemGroup.registerModItemGroups();
 		ModItem.registerModItems();
 		ModBlock.registerModBlocks();
 		LOGGER.info("Hello Fabric world!");

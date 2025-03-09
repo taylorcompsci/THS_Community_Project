@@ -1,7 +1,6 @@
-package blocks;
+package block;
 
 import name.modid.THSCommunityProject;
-import name.modid.items.ModItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.item.BlockItem;
