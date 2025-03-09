@@ -1,5 +1,5 @@
 {
-  "parent" : "minecraft:block/cube-all",
+  "parent" : "minecraft:block/cube_all",
   "textures" : {
     "all" : "ths-community-project:block/test_block"
   }

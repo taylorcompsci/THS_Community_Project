@@ -1,5 +1,4 @@
 {
   "item.ths-community-project.test_item" : "Test Item",
-  "block.ths-community-project.test_block": "Test Block",
-  "item.ths-community-project.test_block": "Test Block"
+  "block.ths-community-project.test_block" : "Test Block"
 }

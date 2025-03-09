@@ -13,53 +13,47 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import java.util.HashMap;
 
 //because settings are private, I had to inherit, so I can make an accessor.
 public class ModBlock extends Block {
 
-    //This is to register items under item groups.
     public static HashMap<ModBlock, RegistryKey<ItemGroup>> groupRegister = new HashMap<>();
 
-    public Settings settings;
+    public static final ModBlock TEST_BLOCK = register(AbstractBlock.Settings.create().sounds(BlockSoundGroup.AMETHYST_BLOCK),"test_block", true, ItemGroups.BUILDING_BLOCKS);
+
+
+    Settings settings;
     public ModBlock(Settings settings){
         super(settings);
         this.settings = settings;
     }
 
-    public Settings getSettings(){
-        return this.settings;
+    public static ModBlock register(Settings settings, String path, boolean registerItem, RegistryKey<ItemGroup> itemGroup){
+        RegistryKey<Block> blockKey = RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(THSCommunityProject.MOD_ID, path));
+        ModBlock modBlock = new ModBlock(settings.registryKey(blockKey));
+
+        if(registerItem){
+            RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path));
+            BlockItem blockItem = new BlockItem(modBlock, new Item.Settings().registryKey(itemKey));
+            Registry.register(Registries.ITEM, itemKey, blockItem);
+        }
+        groupRegister.put(modBlock, itemGroup);
+        return Registry.register(Registries.BLOCK, blockKey, modBlock);
     }
-    //I will try to make this shorter, but it's going to take a solid min to implement....
-   public static final ModBlock TEST_BLOCK = registerBlock("test_block", AbstractBlock.Settings.create(), ItemGroups.BUILDING_BLOCKS);
-
-
-    //Once item is registered, head over to resources/assets.ths-community-project/lang/en_us.json to register the item's name for formatting.
-    public static ModBlock registerBlock(String path,ModBlock.Settings settings, RegistryKey<ItemGroup> itemGroup){
-        ModBlock block = new ModBlock(settings.registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(THSCommunityProject.MOD_ID, path))));
-        ModBlock actualBlock = Registry.register(Registries.BLOCK, path, block);
-        registerBlockItem(path, actualBlock);
-        groupRegister.put(actualBlock, itemGroup);
-        return actualBlock;
-    }
-
-
-    private static void registerBlockItem(String path, ModBlock block){
-        RegistryKey<Item> key = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path));
-        BlockItem item = new BlockItem(block, new ModItem.Settings().registryKey(key));
-        Registry.register(Registries.ITEM,key, item);
-    }
-
 
     public static void registerModBlocks(){
-        THSCommunityProject.LOGGER.info("Registering Mod Blocks!");
-        for(ModBlock block: groupRegister.keySet()){
-            ItemGroupEvents.modifyEntriesEvent(groupRegister.get(block)).register(entries -> {
-                entries.add(block.asItem());
+
+        THSCommunityProject.LOGGER.info("Registering mod blocks!");
+
+        for(ModBlock modBlock : groupRegister.keySet()){
+            ItemGroupEvents.modifyEntriesEvent(groupRegister.get(modBlock)).register(entries -> {
+                entries.add(modBlock.asItem());
             });
         }
-
-
     }
+
+
 }

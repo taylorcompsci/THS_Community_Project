@@ -1,3 +1,6 @@
 {
-  "parent" : "ths-community-project:block/test_block"
+  "model" : {
+    "type" : "minecraft:model",
+    "model" : "ths-community-project:block/test_block"
+  }
 }

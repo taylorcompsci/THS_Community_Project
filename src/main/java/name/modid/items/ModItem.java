@@ -54,6 +54,5 @@ public class ModItem extends Item {
             });
         }
 
-
     }
 }
