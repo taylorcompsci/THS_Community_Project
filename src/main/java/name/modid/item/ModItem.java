@@ -19,6 +19,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
 //because settings are private, I had to inherit, so I can make an accessor.
 public class ModItem extends Item {
@@ -38,19 +39,22 @@ public class ModItem extends Item {
 
 
     //I will try to make this shorter, but it's going to take a solid min to implement....
-    public static final ModItem TEST_ITEM = registerItem("test_item", new Settings(), ModItemGroup.test_group_key);
+    public static final ModItem TEST_ITEM = registerItem("test_item", ModItem::new, new Settings(), ModItemGroup.test_group_key);
     //foodItem
-    public static final ModItem TEST_ITEM2 = registerItem("test_item2", new Settings().food(
+    public static final ModItem TEST_ITEM2 = registerItem("test_item2", ModItem::new, new Settings().food(
             new FoodComponent.Builder().alwaysEdible().nutrition(5).build(),
             ConsumableComponents.food().consumeEffect(new ApplyEffectsConsumeEffect(new StatusEffectInstance(StatusEffects.GLOWING, 6*20,1),1.0f)).build()
                     ),
             ItemGroups.FOOD_AND_DRINK
             );
-
+    public final static ModItem LIGHTNING_STICK = registerItem("lightning_stick", LightningStick::new, new Settings(), ItemGroups.TOOLS);
     //Once item is registered, head over to resources/assets.ths-community-project/lang/en_us.json to register the item's name for formatting.
-    public static ModItem registerItem(String path, Settings settings, RegistryKey<ItemGroup> itemGroup){
-            ModItem item = new ModItem(settings.registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path))));
-            ModItem actualItem =  Registry.register(Registries.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path), item);
+    public static ModItem registerItem(String path, Function<Settings, ModItem> itemFactory, Settings settings, RegistryKey<ItemGroup> itemGroup){
+           RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path));
+
+           ModItem item = itemFactory.apply(settings.registryKey(itemKey));
+
+           ModItem actualItem =  Registry.register(Registries.ITEM, itemKey, item);
         groupRegister.put(actualItem, itemGroup);
         return actualItem;
     }
