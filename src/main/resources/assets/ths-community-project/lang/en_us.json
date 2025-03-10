@@ -1,5 +1,7 @@
 {
   "item.ths-community-project.test_item" : "Test Item",
   "block.ths-community-project.test_block" : "Test Block",
-  "itemgroup.ths-community-project.test_group" : "Test Group"
+  "itemgroup.ths-community-project.test_group" : "Test Group",
+  "item.ths-community-project.counter" : "Counter",
+  "item.ths-community-project.counter.info" : "Used %1$s times"
 }
