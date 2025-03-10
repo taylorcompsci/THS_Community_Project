@@ -3,9 +3,15 @@ package name.modid.item;
 
 import name.modid.THSCommunityProject;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.type.ConsumableComponent;
+import net.minecraft.component.type.ConsumableComponents;
+import net.minecraft.component.type.FoodComponent;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -33,7 +39,13 @@ public class ModItem extends Item {
 
     //I will try to make this shorter, but it's going to take a solid min to implement....
     public static final ModItem TEST_ITEM = registerItem("test_item", new Settings(), ModItemGroup.test_group_key);
-    public static final ModItem TEST_ITEM2 = registerItem("test_item2", new Settings(), ItemGroups.INGREDIENTS);
+    //foodItem
+    public static final ModItem TEST_ITEM2 = registerItem("test_item2", new Settings().food(
+            new FoodComponent.Builder().alwaysEdible().nutrition(5).build(),
+            ConsumableComponents.food().consumeEffect(new ApplyEffectsConsumeEffect(new StatusEffectInstance(StatusEffects.GLOWING, 6*20,1),1.0f)).build()
+                    ),
+            ItemGroups.FOOD_AND_DRINK
+            );
 
     //Once item is registered, head over to resources/assets.ths-community-project/lang/en_us.json to register the item's name for formatting.
     public static ModItem registerItem(String path, Settings settings, RegistryKey<ItemGroup> itemGroup){

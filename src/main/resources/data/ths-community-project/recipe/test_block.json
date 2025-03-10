@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": "ths-community-project:test_item"
+  },
+  "result": {
+    "id": "ths-community-project:test_block",
+    "count": 1
+  }
+}

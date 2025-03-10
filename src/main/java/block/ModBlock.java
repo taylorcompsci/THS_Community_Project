@@ -21,7 +21,7 @@ public class ModBlock extends Block {
 
     public static HashMap<ModBlock, RegistryKey<ItemGroup>> groupRegister = new HashMap<>();
 
-    public static final ModBlock TEST_BLOCK = register(AbstractBlock.Settings.create().sounds(BlockSoundGroup.AMETHYST_BLOCK),"test_block", true, ItemGroups.BUILDING_BLOCKS);
+    public static final ModBlock TEST_BLOCK = register(AbstractBlock.Settings.create().sounds(BlockSoundGroup.AMETHYST_BLOCK).strength(4f).requiresTool(),"test_block", true, ItemGroups.BUILDING_BLOCKS);
 
 
     Settings settings;
