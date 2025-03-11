@@ -2,6 +2,7 @@ package name.modid.item;
 
 
 import name.modid.THSCommunityProject;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.component.type.ConsumableComponent;
 import net.minecraft.component.type.ConsumableComponents;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 //because settings are private, I had to inherit, so I can make an accessor.
-public class ModItem extends Item {
+public class ModItem extends Item  {
 
     //This is to register items under item groups.
     public static HashMap<ModItem, RegistryKey<ItemGroup>> groupRegister = new HashMap<>();
