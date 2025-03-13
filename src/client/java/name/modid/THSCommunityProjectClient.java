@@ -1,6 +1,7 @@
 package name.modid;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.MinecraftClient;
 
 public class THSCommunityProjectClient implements ClientModInitializer {
 	@Override
