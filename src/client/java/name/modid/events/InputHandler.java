@@ -51,9 +51,10 @@ public class InputHandler {
 
         /*KEYBINDS DEFINED HERE:*/
 
-
+        //EXAMPLE KEYBIND
+        //                  name of keybind          keycode         function
         registerKeybind("test", (int) 'Y', (key, client) -> {
-            
+
             client.player.networkHandler.sendChatMessage("Hey bro!!");
 
             return 1;
