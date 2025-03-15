@@ -1,6 +1,6 @@
 package name.modid;
 
-import block.ModBlock;
+import name.modid.block.ModBlock;
 import name.modid.item.ModItem;
 import name.modid.item.ModItemGroup;
 import net.fabricmc.api.ModInitializer;

@@ -1,4 +1,4 @@
-package block;
+package name.modid.block;
 
 import name.modid.THSCommunityProject;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;

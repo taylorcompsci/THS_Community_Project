@@ -1,4 +1,4 @@
-package component;
+package name.modid.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.PrimitiveCodec;

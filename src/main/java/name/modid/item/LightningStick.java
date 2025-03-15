@@ -1,6 +1,6 @@
 package name.modid.item;
 
-import component.ModComponents;
+import name.modid.component.ModComponents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.item.tooltip.TooltipType;
@@ -11,7 +11,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.*;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
