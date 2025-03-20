@@ -6,15 +6,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import oshi.hardware.Display;
 
 
 public class InstrumentItem extends ModItem implements ModInitializer {
 
     private boolean isGUIShown = false;
+    private DisplayInfo displayInfo;
 
-
-    public InstrumentItem(Settings settings) {
+    public InstrumentItem(Settings settings, DisplayInfo displayInfo) {
         super(settings);
+        this.displayInfo = displayInfo;
     }
 
     private void toggleGUI(PlayerEntity user){
