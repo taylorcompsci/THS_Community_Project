@@ -26,6 +26,7 @@ import org.joml.Vector2d;
 
 import java.awt.*;
 
+import java.util.HashMap;
 
 public class HudGui {
 
@@ -46,7 +47,7 @@ public class HudGui {
     private static final Vector2d HIDDEN_POS = new Vector2d(-25,0);
 
     //DYNAMIC
-    private static Vector2d TARGET_POS = HIDDEN_POS;
+    private static Vector2d TARGET_POS = SHOWN_POS;
     private static Vector2d CURRENT_POS = HIDDEN_POS;
 
     //in milliseconds
@@ -56,8 +57,8 @@ public class HudGui {
 
 
     //display info stuff
-    private static DisplayInfo currentDisplayed;
-
+    private static DisplayInfo currentDisplayed = new DisplayInfo(Identifier.of(THSCommunityProject.MOD_ID, "textures/icon.png"), "Piano", new HashMap<>());
+    private static int padding = 2; //percent
 
     public static void show(){TARGET_POS = SHOWN_POS;}
     public static void hide(){TARGET_POS = HIDDEN_POS;}
@@ -94,7 +95,7 @@ public class HudGui {
         CURRENT_POS.x = MathHelper.lerp(progress, CURRENT_POS.x, TARGET_POS.x);
         CURRENT_POS.y = MathHelper.lerp(progress, CURRENT_POS.y, TARGET_POS.y);
 
-        THSCommunityProject.LOGGER.info(String.format("(%.2f, %.2f)", CURRENT_POS.x, CURRENT_POS.y));
+//        THSCommunityProject.LOGGER.info(String.format("(%.2f, %.2f)", CURRENT_POS.x, CURRENT_POS.y));
 
         int posX = screenWidthPercentage(CURRENT_POS.x);
         int posY = screenHeightPercentage(CURRENT_POS.y);
@@ -105,9 +106,11 @@ public class HudGui {
 
 
         context.fill(posX,posY,posX2,posY2, 0xFFFF0000);
-        context.drawTexture(RenderLayer::getGuiTextured, currentDisplayed.textureID(),posX+screenWidthPercentage(DIMENSIONS.x * 0.02), posY+screenHeightPercentage(DIMENSIONS.y * 0.05), screenWidthPercentage(0.75*DIMENSIONS.x), screenHeightPercentage(0.75 * DIMENSIONS.y), 0,0, currentDisplayed.textureWidth(), currentDisplayed.textureHeight());
-        context.drawText(fontRenderer,"Hello World;", Color.WHITE.getRGB(), 50,50, false);
-//        fontRenderer.draw(
+        int imageDimension = screenWidthPercentage(DIMENSIONS.x*(1-(2*padding/100.0)));
+        context.drawTexture(RenderLayer::getGuiTextured, currentDisplayed.textureID(),posX+screenWidthPercentage(DIMENSIONS.x * (padding/100.0)), posY+screenHeightPercentage(DIMENSIONS.y * (padding/100.0)), 0,0, imageDimension,imageDimension, imageDimension, imageDimension);
+      //  context.drawText(RenderLayer::getText, currentDisplayed.name(), (int) (posX+screenWidthPercentage((DIMENSIONS.x) * (padding/100.0))), (int) (imageDimension + (screenHeight * (2*padding/100.0))), Color.WHITE.getRGB(), true);
+      //  context.draw(RenderLayer::getText, currentDisplayed.name(), (int) (posX+screenWidthPercentage(DIMENSIONS.x * (padding/100.0))), (int) (imageDimension + (screenHeight * (2*padding/100.0))), Color.WHITE.getRGB(), true);
+        //        fontRenderer.draw(
 //                "I hate fabric!!",
 //                5,
 //                    5,
