@@ -59,6 +59,10 @@ public class HudGui {
     //display info stuff
     private static DisplayInfo currentDisplayed = new DisplayInfo(Identifier.of(THSCommunityProject.MOD_ID, "textures/icon.png"), "Piano", new HashMap<>());
     private static int padding = 2; //percent
+    private static TextRenderer fontRenderer;
+    private static Matrix4f identityMatrix = new Matrix4f().identity();
+    private static VertexConsumerProvider vertexConsumerProvider;
+
 
     public static void show(){TARGET_POS = SHOWN_POS;}
     public static void hide(){TARGET_POS = HIDDEN_POS;}
@@ -83,11 +87,10 @@ public class HudGui {
 
 
         MinecraftClient client = MinecraftClient.getInstance();
-        TextRenderer fontRenderer = client.textRenderer;
+       fontRenderer = client.textRenderer;
 
-        Matrix4f identityMatrix = new Matrix4f().identity();
 
-        VertexConsumerProvider vertexConsumerProvider = client.getBufferBuilders().getEntityVertexConsumers();
+        vertexConsumerProvider = client.getBufferBuilders().getEntityVertexConsumers();
 
         screenWidth = client.getWindow().getScaledWidth();
         screenHeight = client.getWindow().getScaledHeight();
@@ -108,21 +111,23 @@ public class HudGui {
         context.fill(posX,posY,posX2,posY2, 0xFFFF0000);
         int imageDimension = screenWidthPercentage(DIMENSIONS.x*(1-(2*padding/100.0)));
         context.drawTexture(RenderLayer::getGuiTextured, currentDisplayed.textureID(),posX+screenWidthPercentage(DIMENSIONS.x * (padding/100.0)), posY+screenHeightPercentage(DIMENSIONS.y * (padding/100.0)), 0,0, imageDimension,imageDimension, imageDimension, imageDimension);
-      //  context.drawText(RenderLayer::getText, currentDisplayed.name(), (int) (posX+screenWidthPercentage((DIMENSIONS.x) * (padding/100.0))), (int) (imageDimension + (screenHeight * (2*padding/100.0))), Color.WHITE.getRGB(), true);
-      //  context.draw(RenderLayer::getText, currentDisplayed.name(), (int) (posX+screenWidthPercentage(DIMENSIONS.x * (padding/100.0))), (int) (imageDimension + (screenHeight * (2*padding/100.0))), Color.WHITE.getRGB(), true);
-        //        fontRenderer.draw(
-//                "I hate fabric!!",
-//                5,
-//                    5,
-//                Color.WHITE.getRGB(),
-//                false,
-//                identityMatrix,
-//                vertexConsumerProvider,
-//                TextRenderer.TextLayerType.NORMAL,
-//                Integer.MAX_VALUE,
-//                200
-//
-//        );
 
+        drawText(currentDisplayed.name(), (int) (posX+screenWidthPercentage((DIMENSIONS.x) * (padding/100.0))), (int) (imageDimension + (screenHeight * (2*padding/100.0))), Color.BLUE.getRGB(), true, 200);
+
+    }
+
+    public static void drawText(String text, int x, int y, int color, boolean shadow, int light){
+        fontRenderer.draw(
+                text,
+                x,
+                y,
+                color,
+                shadow,
+                identityMatrix,
+                vertexConsumerProvider,
+                TextRenderer.TextLayerType.SEE_THROUGH,
+                0,
+                light
+        );
     }
 }
