@@ -57,11 +57,21 @@ public class HudGui {
 
 
     //display info stuff
-    private static DisplayInfo currentDisplayed = new DisplayInfo(Identifier.of(THSCommunityProject.MOD_ID, "textures/icon.png"), "Piano", new HashMap<>());
+
+    //context
+    private static DrawContext publicContext;
+    private static  TextRenderer fontRenderer;
+
+    //test case
+    private static DisplayInfo currentDisplayed = new DisplayInfo(Identifier.of(THSCommunityProject.MOD_ID, "textures/icon.png"), "Piano", new HashMap<>(){{
+        put("Am", "K");
+        put("B", "B");
+        put("S", "S");
+
+    }});
     private static int padding = 2; //percent
-    private static TextRenderer fontRenderer;
-    private static Matrix4f identityMatrix = new Matrix4f().identity();
-    private static VertexConsumerProvider vertexConsumerProvider;
+//    private static Matrix4f identityMatrix = new Matrix4f().identity();
+//    private static VertexConsumerProvider vertexConsumerProvider;
 
 
     public static void show(){TARGET_POS = SHOWN_POS;}
@@ -81,16 +91,17 @@ public class HudGui {
             startTime = Util.getMeasuringTimeMs();
         }
 
+
+
         double currentTime = Util.getMeasuringTimeMs()-startTime;
 
         double progress = MathHelper.clamp(currentTime/TWEEN_DURATION, 0.0, 1.0);
 
 
         MinecraftClient client = MinecraftClient.getInstance();
-       fontRenderer = client.textRenderer;
 
-
-        vertexConsumerProvider = client.getBufferBuilders().getEntityVertexConsumers();
+        publicContext = context;
+        fontRenderer = client.textRenderer;
 
         screenWidth = client.getWindow().getScaledWidth();
         screenHeight = client.getWindow().getScaledHeight();
@@ -112,22 +123,28 @@ public class HudGui {
         int imageDimension = screenWidthPercentage(DIMENSIONS.x*(1-(2*padding/100.0)));
         context.drawTexture(RenderLayer::getGuiTextured, currentDisplayed.textureID(),posX+screenWidthPercentage(DIMENSIONS.x * (padding/100.0)), posY+screenHeightPercentage(DIMENSIONS.y * (padding/100.0)), 0,0, imageDimension,imageDimension, imageDimension, imageDimension);
 
-        drawText(currentDisplayed.name(), (int) (posX+screenWidthPercentage((DIMENSIONS.x) * (padding/100.0))), (int) (imageDimension + (screenHeight * (2*padding/100.0))), Color.BLUE.getRGB(), true, 200);
+        int textX = (int) (posX+screenWidthPercentage((DIMENSIONS.x) * (padding/100.0)));
+        int textY = (int) (imageDimension + (screenHeight * (2*padding/100.0)));
+        drawText(currentDisplayed.name(), textX, textY , Color.BLUE.getRGB(), false);
+
+        for(String note: currentDisplayed.notes().keySet()){
+            textY+=screenHeightPercentage(5);
+            String text = String.format("%s - %s", note, currentDisplayed.notes().get(note));
+            drawText(text, textX, textY , Color.BLUE.getRGB(), false);
+
+        }
+
 
     }
 
-    public static void drawText(String text, int x, int y, int color, boolean shadow, int light){
-        fontRenderer.draw(
+    public static void drawText(String text, int x, int y, int color, boolean shadow){
+        publicContext.drawText(
+                fontRenderer,
                 text,
                 x,
                 y,
                 color,
-                shadow,
-                identityMatrix,
-                vertexConsumerProvider,
-                TextRenderer.TextLayerType.SEE_THROUGH,
-                0,
-                light
+                shadow
         );
     }
 }
