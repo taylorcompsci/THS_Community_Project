@@ -50,12 +50,15 @@ public class ModItem extends Item  {
             );
     public final static ModItem LIGHTNING_STICK = registerItem("lightning_stick", LightningStick::new, new Settings(), ItemGroups.TOOLS);
     //Once item is registered, head over to resources/assets.ths-community-project/lang/en_us.json to register the item's name for formatting.
-    public static ModItem registerItem(String path, Function<Settings, ModItem> itemFactory, Settings settings, RegistryKey<ItemGroup> itemGroup){
+
+    public final static InstrumentItem instrument = registerItem("guitar", InstrumentItem.build(new DisplayInfo(Identifier.of(THSCommunityProject.MOD_ID, "textures/icon.png"), "guitar", new HashMap<>())), new Settings(), ItemGroups.TOOLS);
+
+    public static <E extends ModItem> E registerItem(String path, Function<Settings, E> itemFactory, Settings settings, RegistryKey<ItemGroup> itemGroup){
            RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(THSCommunityProject.MOD_ID, path));
 
-           ModItem item = itemFactory.apply(settings.registryKey(itemKey));
+           E item = itemFactory.apply(settings.registryKey(itemKey));
 
-           ModItem actualItem =  Registry.register(Registries.ITEM, itemKey, item);
+           E actualItem =  Registry.register(Registries.ITEM, itemKey, item);
         groupRegister.put(actualItem, itemGroup);
         return actualItem;
     }
